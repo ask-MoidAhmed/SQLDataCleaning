@@ -27,42 +27,50 @@ The dataset required extensive cleanup and standardization. The following steps 
 - All column names were renamed to **PascalCase** for readability and SQL compatibility.  
   Example: `breakfast` → `Breakfast`, `calories_day` → `CaloriesImp`
 
+![image](https://github.com/user-attachments/assets/74f16653-7d2c-496d-a734-47eafc5f3239)
+
 ### 🔸 2. Gender Normalization
 
 - Numeric codes and ambiguous values were converted:
-  - `0` → `'Male'`, `1` → `'Female'`, null/other → `'NoResponse'`
+  - `0` → `'Male'`, `1` → `'Female'`, null/other → `'NoResponse'`\
+
+![image](https://github.com/user-attachments/assets/f183704e-86a2-470e-97f2-73887cbda8b1)
 
 ### 🔸 3. Handling Null and Ambiguous Values
 
 - Replaced `'nan'`, `'NaN'`, empty strings, and nulls with `'NoResponse'` or `'Unknown'` for consistency.
 
-### 🔸 4. Binary Flag Columns
+![image](https://github.com/user-attachments/assets/b2704300-552f-48da-baeb-ba68a0efef51)
 
-- Transformed columns using `0`/`1` into readable values:
-  - `1` → `'Yes'`
-  - `0` or null → `'No'` or `'NoResponse'`
-
-### 🔸 5. Categorical Mapping for Coded Fields
+### 🔸 4. Categorical Mapping for Coded Fields
 
 - Translated coded values into human-readable labels:
   - `ComfortFoodReasons`: `1` → `'Stress'`, `2` → `'Boredom'`, etc.
   - `IdealDiet`, `FavCuisine`, and `EatingChanges` were similarly decoded.
   - Ensured consistency between duplicated columns like `EatingChanges` and `EatingChanges2`.
 
-### 🔸 6. Lifestyle Behavior Columns
+![image](https://github.com/user-attachments/assets/7d83d784-0fe5-4ae5-bd2b-2b7b471f5932)
+
+### 🔸 5. Lifestyle Behavior Columns
 
 - Cleaned and standardized columns like `Exercise`, `Smoker`, `PayMealOut`, `LivingSituation`.
 - Uniform text formatting (`'Yes'`, `'No'`, `'NoResponse'`), removal of inconsistent free-text.
 
-### 🔸 7. Self-Perception & Weight Columns
+![image](https://github.com/user-attachments/assets/699e1097-83f0-4c2e-9dc8-4ec9298f3542)
+
+### 🔸 6. Self-Perception & Weight Columns
 
 - Normalized responses for perceived weight (`SelfWeight`) into standard categories.
 
-### 🔸 8. Food Item Calorie Columns
+![image](https://github.com/user-attachments/assets/db6e44f2-ea38-4d61-b4c7-08a870f90113)
+
+### 🔸 7. Food Item Calorie Columns
 
 - Renamed vague columns for clarity:  
   `calories_chicken` → `ChickenCal`, `waffle_calories` → `WaffleCal`, etc.
 - Checked for nulls and ensured consistent value entry.
+
+![image](https://github.com/user-attachments/assets/8ec1008b-450a-476e-88b1-498744eed231)
 
 ---
 
@@ -74,6 +82,12 @@ To improve data integrity and future querying performance, **data types were alt
 - **Coded categorical columns** were updated to `VARCHAR` with cleaned, mapped values.
 - **Numerical columns** (e.g., `ChickenCal`, `SconeCal`) were kept or converted to appropriate numeric types (`INT` or `DECIMAL`) based on precision needs.
 - Ensured that all columns reflected their actual data use-case rather than relying on the original incorrect or generic types.
+
+![image](https://github.com/user-attachments/assets/0a7f5821-7e70-44a5-a6cb-47f9721916c9)
+
+![image](https://github.com/user-attachments/assets/f91ed9d0-c562-41ff-9b47-882921ceb7b9)
+
+![image](https://github.com/user-attachments/assets/ccbfab30-96a8-494b-8767-9d72524d98d2)
 
 ---
 
