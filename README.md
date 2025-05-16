@@ -1,4 +1,6 @@
-# 🍽️ Food Preferences Dataset Cleaning Project (SQL)
+#  Two Datasets Cleaning Project (SQL)
+
+## 🍽️ Food Preferences Dataset Cleaning Project (SQL)
 
 This repository showcases a complete data cleaning process of a food preference survey dataset using **MySQL**. The original dataset contained inconsistent, incomplete, and ambiguous values that needed to be cleaned and standardized for accurate analysis. All queries were written and executed in **MySQL**, and screenshots have been included to demonstrate each transformation.
 
@@ -12,13 +14,13 @@ Rather than altering the original dataset directly, a **staging table** (`food_s
 
 ---
 
-## 🛠️ Tools Used
+### 🛠️ Tools Used
 
 - **MySQL** – for all data inspection, transformation, type conversion, and cleaning.
 
 ---
 
-## 🧹 Data Cleaning Strategy
+### 🧹 Data Cleaning Strategy
 
 The dataset required extensive cleanup and standardization. The following steps were taken:
 
@@ -74,7 +76,7 @@ The dataset required extensive cleanup and standardization. The following steps 
 
 ---
 
-## 🔢 Data Type Refinement
+### 🔢 Data Type Refinement
 
 To improve data integrity and future querying performance, **data types were altered** where appropriate:
 
@@ -91,7 +93,7 @@ To improve data integrity and future querying performance, **data types were alt
 
 ---
 
-## ✅ Summary
+### ✅ Summary
 
 This SQL project involved comprehensive transformation steps including:
 
@@ -102,6 +104,61 @@ This SQL project involved comprehensive transformation steps including:
 - Updating and correcting data types to match content and purpose
 
 All changes were applied through SQL in a dedicated staging table to ensure data quality, reproducibility, and clear version control.
+
+---
+
+## 🧹 Audible SQL Data Cleaning
+
+### 📌 Overview
+This project showcases hands-on SQL data cleaning techniques applied to a messy Audible audiobook dataset. It simulates real-world challenges in preparing data for analysis, focusing on format consistency, null handling, and data type standardization.
+
+### 🎯 Objectives
+- 📋 Create a clean working copy of the original dataset
+- 🧽 Remove noisy labels and normalize key fields
+- 📅 Standardize date formats and 📈 prepare time values for analysis
+- 🧾 Separate and clean complex text fields (e.g., stars/ratings)
+
+### 🛠️ Cleaning Process
+
+###  Author & Narrator
+- Removed embedded text like `Writtenby:` and `Narratedby:` from their respective columns to ensure uniform naming.
+
+![image](https://github.com/user-attachments/assets/51980e65-6d42-4685-baa0-d0dc5906b3ad)
+
+###  Release Date
+- Converted text-based `RELEASEDATE` values into standard SQL `DATE` format using `STR_TO_DATE()`.
+
+![image](https://github.com/user-attachments/assets/5e470cd0-cf1f-494a-9c2f-48533afbbf15)
+
+###  Ratings & Reviews
+- Cleaned and split the `STARS` column into two logical columns:
+  - `StarsClean`: Extracted numeric star ratings
+  - `Ratings`: Pulled out the number of ratings
+- Replaced values like `"Not yet rated"` with `NULL` for accurate handling.
+
+![image](https://github.com/user-attachments/assets/727b4589-a4ec-448b-a264-71f1f8b38bb8)
+
+![image](https://github.com/user-attachments/assets/bf0f08bd-ff72-47d6-a405-c04c4d780c1e)
+
+![image](https://github.com/user-attachments/assets/18d6a439-0e86-4bbf-9509-8dd0889b792d)
+
+###  Listening Time
+- Transformed verbose time values (e.g., `"4 hrs and 45 mins"`) into structured `HH:MM` format.
+- Ensured compatibility by converting the values into SQL time format.
+
+![image](https://github.com/user-attachments/assets/543fc41c-dae7-4c86-b6b1-ad5a191ac405)
+
+### ✅ Outcomes
+- 🔍 Increased data clarity and consistency across all major fields.
+- 📐 Enabled precise querying and analysis for business intelligence.
+- 🧩 Built a foundation for further data enrichment or dashboarding.
+
+### 🧠 Skills Demonstrated
+- SQL data wrangling & transformation  
+- Text parsing and cleanup  
+- Date & time format conversion  
+- Null and edge-case handling  
+- Real-world ETL logic simulation
 
 ---
 
