@@ -14,82 +14,80 @@ Rather than altering the original dataset directly, a **staging table** (`food_s
 
 ## 🛠️ Tools Used
 
-- **MySQL** – for all data inspection, cleaning, transformation, and querying.
+- **MySQL** – for all data inspection, transformation, type conversion, and cleaning.
 
 ---
 
 ## 🧹 Data Cleaning Strategy
 
-The dataset contained numerous inconsistencies, coded values, nulls, and formatting issues. The following cleaning steps were performed entirely in SQL within MySQL:
+The dataset required extensive cleanup and standardization. The following steps were taken:
 
 ### 🔸 1. Column Standardization
 
-- All column names were renamed to **PascalCase** for better readability and SQL compatibility.  
-  Example:
-  - `breakfast` → `Breakfast`
-  - `calories_day` → `CaloriesImp`
-  - `comfort_food_reasons_coded` → `ComfortFoodReasons`
+- All column names were renamed to **PascalCase** for readability and SQL compatibility.  
+  Example: `breakfast` → `Breakfast`, `calories_day` → `CaloriesImp`
 
 ### 🔸 2. Gender Normalization
 
-- Mapped numeric and ambiguous values to clear labels:
-  - `0` → `'Male'`
-  - `1` → `'Female'`
-  - Any nulls or invalid entries → `'NoResponse'`
+- Numeric codes and ambiguous values were converted:
+  - `0` → `'Male'`, `1` → `'Female'`, null/other → `'NoResponse'`
 
 ### 🔸 3. Handling Null and Ambiguous Values
 
-- All `'nan'`, `'NaN'`, or null-like entries were replaced with `'NoResponse'` or `'Unknown'` where appropriate.
-- This was applied across nearly all columns to ensure consistent null handling.
+- Replaced `'nan'`, `'NaN'`, empty strings, and nulls with `'NoResponse'` or `'Unknown'` for consistency.
 
 ### 🔸 4. Binary Flag Columns
 
-- Multiple columns with `0`/`1` values (e.g., `Breakfast`, `Coffee`, `ParentsCook`) were converted:
+- Transformed columns using `0`/`1` into readable values:
   - `1` → `'Yes'`
   - `0` or null → `'No'` or `'NoResponse'`
 
 ### 🔸 5. Categorical Mapping for Coded Fields
 
-Several columns used integer codes that were mapped to descriptive strings:
-
-- **Comfort Food Reasons**
-  - `1` → `'Stress'`, `2` → `'Boredom'`, `3` → `'Depression'`, etc.
-- **Ideal Diet**
-  - Mapped codes to options like `'Low Carb'`, `'Paleo'`, `'Keto'`, `'Balanced'`, etc.
-- **FavCuisine**
-  - Mapped to `'Italian'`, `'Mexican'`, `'Chinese'`, `'Indian'`, `'American'`, etc.
-- **Eating Changes**
-  - Normalized multiple variations of yes/no responses, accounted for multiple survey versions (`EatingChanges`, `EatingChanges2`).
+- Translated coded values into human-readable labels:
+  - `ComfortFoodReasons`: `1` → `'Stress'`, `2` → `'Boredom'`, etc.
+  - `IdealDiet`, `FavCuisine`, and `EatingChanges` were similarly decoded.
+  - Ensured consistency between duplicated columns like `EatingChanges` and `EatingChanges2`.
 
 ### 🔸 6. Lifestyle Behavior Columns
 
-- Columns such as `Exercise`, `Smoker`, `PayMealOut`, and `LivingSituation` were cleaned:
-  - Mapped inconsistent text responses and codes to `'Yes'`, `'No'`, or `'NoResponse'`
-  - Ensured boolean-type columns had uniform casing and clarity
+- Cleaned and standardized columns like `Exercise`, `Smoker`, `PayMealOut`, `LivingSituation`.
+- Uniform text formatting (`'Yes'`, `'No'`, `'NoResponse'`), removal of inconsistent free-text.
 
 ### 🔸 7. Self-Perception & Weight Columns
 
-- **SelfWeight** responses like `"Too Much"`, `"Too Little"`, `"About Right"` were standardized and assigned `'NoResponse'` for any unknowns.
-- Normalized perception values into proper case and readable categories.
+- Normalized responses for perceived weight (`SelfWeight`) into standard categories.
 
 ### 🔸 8. Food Item Calorie Columns
 
-- Columns like `ChickenCal`, `SconeCal`, `PaneraCal`, `WaffleCal`, and `BurritoCal` were renamed from unclear names and checked for nulls.
-- Any missing entries were labeled `'NoResponse'` or left null as needed for numeric columns.
+- Renamed vague columns for clarity:  
+  `calories_chicken` → `ChickenCal`, `waffle_calories` → `WaffleCal`, etc.
+- Checked for nulls and ensured consistent value entry.
+
+---
+
+## 🔢 Data Type Refinement
+
+To improve data integrity and future querying performance, **data types were altered** where appropriate:
+
+- **Boolean-type columns** (e.g., `Coffee`, `ParentsCook`, `Exercise`) were converted from numeric or text to `ENUM('Yes','No','NoResponse')`.
+- **Coded categorical columns** were updated to `VARCHAR` with cleaned, mapped values.
+- **Numerical columns** (e.g., `ChickenCal`, `SconeCal`) were kept or converted to appropriate numeric types (`INT` or `DECIMAL`) based on precision needs.
+- Ensured that all columns reflected their actual data use-case rather than relying on the original incorrect or generic types.
 
 ---
 
 ## ✅ Summary
 
-This SQL project involved over 20 transformation steps including:
+This SQL project involved comprehensive transformation steps including:
 
-- Column renaming
-- Null value handling
-- Value replacement for binary and categorical fields
-- Text standardization
-- Normalization across duplicated or multi-version fields
+- Renaming and standardizing column headers
+- Cleaning inconsistent values
+- Mapping coded fields to readable categories
+- Handling nulls and ambiguous entries
+- Updating and correcting data types to match content and purpose
 
-The cleaned dataset is now ready for meaningful analysis and visualization.
+All changes were applied through SQL in a dedicated staging table to ensure data quality, reproducibility, and clear version control.
 
 ---
 
@@ -97,6 +95,6 @@ The cleaned dataset is now ready for meaningful analysis and visualization.
 
 **Created by Moid Ahmed**  
 Student at Southern New Hampshire University (SNHU)  
-Loves working with structured data and building meaningful insights through clean, logical transformations.
+Enjoys working with structured data, bringing order to messy datasets, and developing practical SQL solutions for real-world analysis.
 
 ---
