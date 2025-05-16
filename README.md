@@ -96,5 +96,3 @@ All changes were applied through SQL in a dedicated staging table to ensure data
 **Created by Moid Ahmed**  
 Student at Southern New Hampshire University (SNHU)  
 Enjoys working with structured data, bringing order to messy datasets, and developing practical SQL solutions for real-world analysis.
-
----
