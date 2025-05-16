@@ -1,0 +1,85 @@
+SELECT *
+FROM audible_uncleaned;
+
+CREATE TABLE AUDIBLE_CLEANED
+SELECT *
+FROM audible_uncleaned;
+
+SELECT *
+FROM AUDIBLE_CLEANED;
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE AUDIBLE_CLEANED
+SET AUTHOR = REPLACE(AUTHOR, 'Writtenby:','');
+
+UPDATE AUDIBLE_CLEANED
+SET NARRATOR = REPLACE(NARRATOR, 'Narratedby:','');
+
+UPDATE AUDIBLE_CLEANED
+SET RELEASEDATE = str_to_date(RELEASEDATE, '%d-%m-%y');
+
+SELECT RELEASEDATE, str_to_date(RELEASEDATE, '%d-%m-%y') as correctdate
+FROM audible_cleaned;
+
+UPDATE AUDIBLE_CLEANED
+SET stars = REPLACE(stars, 'stars','   ');
+
+UPDATE AUDIBLE_CLEANED
+SET stars = REPLACE(stars, 'ratings','');
+
+UPDATE AUDIBLE_CLEANED
+SET stars = REPLACE(stars, ' ','  ');
+
+SELECT STARS, TRIM(LEFT(STARS,3)) AS StarsCleaned
+FROM audible_cleaned
+;
+
+ALTER TABLE audible_cleaned
+ADD COLUMN StarsClean TEXT;
+
+ALTER TABLE AUDIBLE_CLEANED
+MODIFY COLUMN StarsClean VARCHAR(20);
+
+UPDATE AUDIBLE_CLEANED
+SET StarsClean = TRIM(LEFT(STARS,3));
+
+SELECT *
+FROM AUDIBLE_CLEANED;
+
+UPDATE AUDIBLE_CLEANED
+SET StarsClean = CASE
+					WHEN StarsClean = 'Not' THEN NULL
+                    ELSE StarsClean
+				 END;
+
+ALTER TABLE AUDIBLE_CLEANED
+ADD COLUMN Ratings VARCHAR(20);
+
+UPDATE AUDIBLE_CLEANED
+SET Ratings = TRIM(RIGHT(STARS,3));
+
+UPDATE AUDIBLE_CLEANED
+SET Ratings = CASE
+					WHEN Ratings = 'yet' THEN NULL
+                    ELSE Ratings
+				 END;
+
+ALTER TABLE audible_cleaned
+DROP COLUMN STARS;
+
+SELECT `TIME`, REPLACE(REPLACE(`TIME`, ' hrs and ',':'), ' mins', '') AS CorrectTime
+FROM audible_cleaned;
+
+UPDATE AUDIBLE_CLEANED
+SET `TIME` = REPLACE(REPLACE(`TIME`, ' hrs and ',':'), ' mins', '');
+
+UPDATE AUDIBLE_CLEANED
+SET `TIME` = REPLACE(REPLACE(`TIME`, ' hr and ',':'), ' min', '');
+
+UPDATE AUDIBLE_CLEANED
+SET `TIME` = REPLACE(`TIME`, ' hrs',':0');
+
+UPDATE AUDIBLE_CLEANED
+SET `TIME` = str_to_date(`TIME`, '%H:%i');
+
